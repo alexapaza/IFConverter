@@ -17,7 +17,7 @@ public class Parameter {
         return inputFile;
     }
     public String getFileName() {
-        return inputFile.getAbsolutePath();
+        return inputFile.getName();
     }
 
     public void validate() throws Exception{

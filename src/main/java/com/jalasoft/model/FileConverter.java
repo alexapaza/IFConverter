@@ -16,7 +16,7 @@ import com.jalasoft.model.parameter.Parameter;
 public class FileConverter {
 
     public String converFile(FileConverterParam param) throws Exception {
-        String dataDirFile = param.getFileName(); // param.getInputPath()+param.getFileName(); // "src/main/resources/CMX/Rectangle.cmx";
+        String dataDirFile = param.getInputPath()+ param.getFileName(); // param.getInputPath()+param.getFileName(); // "src/main/resources/CMX/Rectangle.cmx";
 
         try (Image image = Image.load(dataDirFile)){
             CmxRasterizationOptions cmxRasterizationOptions = new CmxRasterizationOptions();
@@ -27,7 +27,7 @@ public class FileConverter {
             image.save(  param.getOutputPath()+ param.getFileName()+"."+ param.getFormat(), options);
             return "File converted succesfully";
         }catch (Exception e){
-            throw  new Exception(e.getMessage());
+            throw  new Exception("Fail file conversion:"+e.getMessage());
         }
 
     }
