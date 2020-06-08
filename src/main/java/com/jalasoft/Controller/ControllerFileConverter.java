@@ -1,13 +1,20 @@
 package com.jalasoft.Controller;
 
+
+import com.jalasoft.Controller.Response.Response;
+import com.jalasoft.Controller.component.Properties;
+import com.jalasoft.Controller.service.FileService;
 import com.jalasoft.model.FileConverter;
 import com.jalasoft.model.parameter.FileConverterParam;
 import com.jalasoft.model.parameter.Parameter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -24,53 +31,54 @@ import java.nio.file.StandardCopyOption;
 @RestController
 @RequestMapping("/api/v3")
 public class ControllerFileConverter {
+    @Autowired
+    private Properties properties;
+
+    @Autowired
+    private FileService fileService;
+
     @PostMapping()
-    public String gatherConverterInput(@RequestParam(value= "file")MultipartFile file,
-                                       @RequestParam(value="format") String format,
-                                       @RequestParam(value="md5") String md5){
+    public ResponseEntity gatherConverterInput(@RequestParam(value= "file")MultipartFile file,
+                                               @RequestParam(value="format") String format,
+                                               @RequestParam(value="md5") String md5){
 
         if (file.isEmpty()){
-            return "error file";
+            return ResponseEntity.badRequest().body(
+                    new Response("","File is empty","400")
+            );
+
+                    //  new ResponseEntity("","file is empty",400);
         }
         if (format.isEmpty()){
-            return "error format";
+            return ResponseEntity.badRequest().body(
+                    new Response("","format is wrong","400")
+            );
         }
         if(md5.isEmpty()){
-            return "erro in msd5";
+            return ResponseEntity.badRequest().body(
+                    new Response("","md5 is wrong","400")
+            );
         }
-        String inputFilePath = "";
-        String inputPath = "src/main/resources/CMXInputPath/";
-        String outputPath = "src/main/resources/CMXOutputPath/";
-        try {
-            Files.createDirectories(Paths.get(inputPath)); // to create input folder
-            Files.createDirectories(Paths.get(outputPath)); // to create output folder
-
-            inputFilePath = inputPath+file.getOriginalFilename();
-
-            Path path = Paths.get(inputFilePath);
-            Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println(path.getFileSystem());
-            System.out.println();
 
 
-        } catch (IOException e) {
-            e.getMessage();
-        }
-        File image = new File(inputFilePath);
-        FileConverterParam param = new FileConverterParam(image,inputPath,outputPath,format);
-
-        FileConverter fileConverter = new FileConverter();
 
         try {
+            File image = fileService.saveFileInputFolder(file,md5);
+            FileConverterParam param =
+                    new FileConverterParam(image,properties.getInputFolder(),properties.getOutputFolder(),format);
+
+            FileConverter fileConverter = new FileConverter();
             param.validate();
-            fileConverter.converFile(param);
+            String result= fileConverter.converFile(param);
+            return ResponseEntity.ok().body(
+                    new Response(result,"","200")
+            );
 
         }catch (Exception e){
-           return e.getMessage();
+            return ResponseEntity.badRequest().body(
+                    new Response("",e.getMessage(),"400")
+            );
         }
-
-
-        return "file converted";
     }
 
 

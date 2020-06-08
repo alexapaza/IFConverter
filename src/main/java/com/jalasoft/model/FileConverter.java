@@ -13,9 +13,11 @@ import com.jalasoft.model.parameter.Parameter;
  * @version 1.1
  * @date 5/31/2020
  */
+
 public class FileConverter {
 
     public String converFile(FileConverterParam param) throws Exception {
+        param.validate();
         String dataDirFile = param.getInputPath()+ param.getFileName(); // param.getInputPath()+param.getFileName(); // "src/main/resources/CMX/Rectangle.cmx";
 
         try (Image image = Image.load(dataDirFile)){
@@ -27,7 +29,7 @@ public class FileConverter {
             image.save(  param.getOutputPath()+ param.getFileName()+"."+ param.getFormat(), options);
             return "File converted succesfully";
         }catch (Exception e){
-            throw  new Exception("Fail file conversion:"+e.getMessage());
+            throw  new Exception("Failed file converter:"+e.getMessage());
         }
 
     }
