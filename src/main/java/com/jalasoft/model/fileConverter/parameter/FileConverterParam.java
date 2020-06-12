@@ -15,7 +15,7 @@ public class FileConverterParam extends Parameter {
     private String inputPath;
     private String outputPath;
     private String format;
-    private final static List<String> OUTPUT_FORMAT = Arrays.asList("eng", "spa");
+    private final static List<String> OUTPUT_FORMAT = Arrays.asList("png", "spa");
 
 
     public FileConverterParam(File inputFile, String inputPath, String outputPath, String format) {
@@ -48,7 +48,6 @@ public class FileConverterParam extends Parameter {
 
     @Override
     public void validate() throws ParameterInvalidException {
-        super.validate();
         if (this.inputPath.trim().isEmpty()){
             throw new ParameterInvalidException();
         }

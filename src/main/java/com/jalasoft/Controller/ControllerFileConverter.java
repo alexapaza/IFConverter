@@ -54,7 +54,7 @@ public class ControllerFileConverter {
                     new FileConverterParam(image,properties.getInputFolder(),properties.getOutputFolder(),parameter.getFormat());
 
             IFileConverter<FileConverterParam> fileConverter = new FileConverter();
-            param.validate();
+            // param.validate();
             Result result= fileConverter.converFile( param);
             return ResponseEntity.ok().body(
                     new OKResponse<Integer>(HttpServletResponse.SC_OK,result.getResultText())
@@ -75,9 +75,4 @@ public class ControllerFileConverter {
         }
 
     }
-
-
-
-
-
 }
