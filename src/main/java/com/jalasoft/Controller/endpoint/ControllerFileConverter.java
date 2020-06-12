@@ -1,4 +1,4 @@
-package com.jalasoft.Controller;
+package com.jalasoft.Controller.endpoint;
 
 
 import com.jalasoft.Controller.Exception.FileException;
@@ -40,11 +40,8 @@ public class ControllerFileConverter {
     @Autowired
     private FileService fileService;
 
-    @PostMapping()
-    /*public ResponseEntity gatherConverterInput(@RequestParam(value= "file")MultipartFile file,
-                                               @RequestParam(value="format") String format,
-                                               @RequestParam(value="md5") String md5){
-*/
+    @PostMapping("/converter")
+
     public ResponseEntity gatherConverterInput(RequestConverterParameters parameter){
 
 
@@ -75,4 +72,35 @@ public class ControllerFileConverter {
         }
 
     }
+    @PostMapping("/converter/download")
+    public ResponseEntity extractMetadata(RequestConverterParameters parameter) {
+        try {
+            File image = fileService.saveFileInputFolder(parameter.getFile(),parameter.getMd5());
+            FileConverterParam param =
+                    new FileConverterParam(image,properties.getInputFolder(),properties.getOutputFolder(),parameter.getFormat());
+
+            IFileConverter<FileConverterParam> fileConverter = new FileConverter();
+            // param.validate();
+            Result result= fileConverter.converFile( param);
+            String fileDownloadUri = fileService.getDownloadLink(new File(result.getResultText()));
+            return ResponseEntity.ok().body(
+                    new OKResponse<Integer>(HttpServletResponse.SC_OK,fileDownloadUri)
+            );
+
+        }catch (FileException e){
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST),e.getMessage())
+            );
+        }catch (ParameterInvalidException e){
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST),e.getMessage())
+            );
+        }catch (FileConverterException e){
+            return ResponseEntity.badRequest().body(
+                    new ErrorResponse<String>(Integer.toString(HttpServletResponse.SC_BAD_REQUEST),e.getMessage())
+            );
+        }
+
+    }
+
 }

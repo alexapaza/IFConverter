@@ -10,6 +10,7 @@ import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
 import com.jalasoft.model.fileConverter.parameter.FileConverterParam;
 import com.jalasoft.model.fileConverter.parameter.Parameter;
 import com.jalasoft.model.result.Result;
+import com.jalasoft.model.util.Logger;
 
 /**
  * @author Alexander Apaza
@@ -18,7 +19,7 @@ import com.jalasoft.model.result.Result;
  */
 
 public class FileConverter implements IFileConverter<FileConverterParam> {
-
+    Logger logger = Logger.getInstance();
     @Override
     public Result converFile(FileConverterParam param) throws FileConverterException, ParameterInvalidException {
         param.validate();
@@ -31,8 +32,11 @@ public class FileConverter implements IFileConverter<FileConverterParam> {
             PngOptions options = new PngOptions();
             options.setVectorRasterizationOptions(cmxRasterizationOptions);
             image.save(  param.getOutputPath()+ param.getFileName()+"."+ param.getFormat(), options);
-            return new Result("Conversion went fine");
+            logger.writeLog("INFO:File Conversion went fine");
+            return new Result(param.getFileName()+"."+ param.getFormat());
+
         }catch (Exception e){
+            logger.writeLog("ERROR:File convertion failed below the detail:"+e.getMessage());
             throw  new FileConverterException(e);
         }
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,5 +48,11 @@ public class FileService {
             throw  new FileException(ErrorConstant.FILE_ERROR);
         }
 
+    }
+    public String getDownloadLink(File file) {
+        return ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/v1/download/")
+                .path(file.getName())
+                .toUriString();
     }
 }
