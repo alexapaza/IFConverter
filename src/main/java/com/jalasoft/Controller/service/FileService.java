@@ -1,7 +1,9 @@
 package com.jalasoft.Controller.service;
 
+import com.jalasoft.Controller.Exception.FileException;
 import com.jalasoft.Controller.Response.Response;
 import com.jalasoft.Controller.component.Properties;
+import com.jalasoft.Controller.constant.ErrorConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -24,22 +26,26 @@ public class FileService {
     @Autowired
     private Properties properties;
 
-    public File saveFileInputFolder(MultipartFile file, String md5) throws Exception {
+    public File saveFileInputFolder(MultipartFile file, String md5) throws FileException {
         if (md5.isEmpty()){
-            throw new Exception("md5 is empty");
+            throw new FileException(ErrorConstant.FILE_ERROR);
         }
         String inputFilePath = "";
         String inputPath = properties.getInputFolder();
         String outputPath = properties.getOutputFolder();
+        try {
 
-        Files.createDirectories(Paths.get(inputPath)); // to create input folder
-        Files.createDirectories(Paths.get(outputPath)); // to create output folder
+            Files.createDirectories(Paths.get(inputPath)); // to create input folder
+            Files.createDirectories(Paths.get(outputPath)); // to create output folder
 
-        inputFilePath = inputPath+file.getOriginalFilename();
+            inputFilePath = inputPath + file.getOriginalFilename();
 
-        Path path = Paths.get(inputFilePath);
-        Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
-        return new File(inputFilePath);
+            Path path = Paths.get(inputFilePath);
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            return new File(inputFilePath);
+        }catch (IOException e){
+            throw  new FileException(ErrorConstant.FILE_ERROR);
+        }
 
     }
 }

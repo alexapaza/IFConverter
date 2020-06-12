@@ -1,4 +1,4 @@
-package com.jalasoft.model.parameter;
+package com.jalasoft.model.fileConverter.parameter;
 
 import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
 

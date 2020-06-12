@@ -5,18 +5,18 @@ package com.jalasoft.Controller.Response;
  * @version 1.1
  * @date 6/6/2020
  */
-public abstract class Response {
+public abstract class Response<T> {
 
-    private String status;
+    private T status;
 
-    public Response( String status) {
+    public Response( T status) {
         this.status = status;
     }
-    public String getStatus() {
+    public T getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(T status) {
         this.status = status;
     }
 }

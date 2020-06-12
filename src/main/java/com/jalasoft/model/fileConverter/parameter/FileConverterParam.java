@@ -1,6 +1,5 @@
-package com.jalasoft.model.parameter;
+package com.jalasoft.model.fileConverter.parameter;
 
-import com.jalasoft.model.fileConverter.exception.FileConverterException;
 import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
 
 import java.io.File;
@@ -10,7 +9,7 @@ import java.io.File;
  * @version 1.1
  * @date 5/31/2020
  */
-public class FileConverterParam extends Parameter{
+public class FileConverterParam extends Parameter {
     private String inputPath;
     private String outputPath;
     private String format;

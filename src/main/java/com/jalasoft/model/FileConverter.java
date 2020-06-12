@@ -7,8 +7,8 @@ import com.aspose.imaging.imageoptions.PngOptions;
 import com.aspose.imaging.imageoptions.PositioningTypes;
 import com.jalasoft.model.fileConverter.exception.FileConverterException;
 import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
-import com.jalasoft.model.parameter.FileConverterParam;
-import com.jalasoft.model.parameter.Parameter;
+import com.jalasoft.model.fileConverter.parameter.FileConverterParam;
+import com.jalasoft.model.fileConverter.parameter.Parameter;
 import com.jalasoft.model.result.Result;
 
 /**
@@ -17,9 +17,9 @@ import com.jalasoft.model.result.Result;
  * @date 5/31/2020
  */
 
-public class FileConverter {
+public class FileConverter implements IFileConverter<FileConverterParam> {
 
-    //public String converFile(FileConverterParam param) throws Exception {
+    @Override
     public Result converFile(FileConverterParam param) throws FileConverterException, ParameterInvalidException {
         param.validate();
         String dataDirFile = param.getInputPath()+ param.getFileName(); // param.getInputPath()+param.getFileName(); // "src/main/resources/CMX/Rectangle.cmx";

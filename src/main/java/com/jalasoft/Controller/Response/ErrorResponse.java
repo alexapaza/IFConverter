@@ -5,14 +5,13 @@ package com.jalasoft.Controller.Response;
  * @version 1.1
  * @date 6/11/2020
  */
-public class ErrorResponse extends Response {
+public class ErrorResponse<T> extends Response<T> {
     String error;
-    public ErrorResponse(String status, String error) {
+    public ErrorResponse(T status, String error) {
         super(status);
         this.error = error;
 
     }
-
     public String getError() {
         return error;
     }

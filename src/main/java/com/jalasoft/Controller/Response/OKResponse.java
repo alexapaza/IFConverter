@@ -5,9 +5,9 @@ package com.jalasoft.Controller.Response;
  * @version 1.1
  * @date 6/11/2020
  */
-public class OKResponse extends Response{
+public class OKResponse<T> extends Response<T>{
     String message;
-    public OKResponse(String status, String message) {
+    public OKResponse(T status, String message) {
         super(status);
         this.message = message;
     }
