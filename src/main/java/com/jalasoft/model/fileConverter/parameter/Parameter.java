@@ -9,8 +9,9 @@ import java.io.File;
  * @version 1.1
  * @date 6/2/2020
  */
-public class Parameter {
-    File inputFile;
+public abstract class Parameter {
+    protected File inputFile;
+
     Parameter(File inputFile){
         this.inputFile =inputFile;
     }
@@ -22,12 +23,6 @@ public class Parameter {
         return inputFile.getName();
     }
 
-    public void validate() throws ParameterInvalidException {
-        if (inputFile.isHidden()){
-            throw new ParameterInvalidException();
-        }if (!inputFile.isFile()){
-            throw new ParameterInvalidException();
-        }
+    public abstract void validate() throws ParameterInvalidException;
 
-    }
 }

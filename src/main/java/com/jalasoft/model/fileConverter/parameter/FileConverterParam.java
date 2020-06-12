@@ -3,6 +3,8 @@ package com.jalasoft.model.fileConverter.parameter;
 import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Alexander Apaza
@@ -13,6 +15,8 @@ public class FileConverterParam extends Parameter {
     private String inputPath;
     private String outputPath;
     private String format;
+    private final static List<String> OUTPUT_FORMAT = Arrays.asList("eng", "spa");
+
 
     public FileConverterParam(File inputFile, String inputPath, String outputPath, String format) {
         super(inputFile);
@@ -54,7 +58,23 @@ public class FileConverterParam extends Parameter {
         if (this.format.trim().isEmpty()){
             throw new ParameterInvalidException();
         }
+        if(inputFile.isHidden()){
+            throw  new ParameterInvalidException();
+        }
+        if(!inputFile.isFile()){
+            throw  new ParameterInvalidException();
+        }
+        if(inputFile.toPath().toString().contains("..")){
+            throw  new ParameterInvalidException("invalid input file");
+        }
 
+        if (this.format.trim().isEmpty()) {
+            throw new ParameterInvalidException();
+        }
+
+        if (!OUTPUT_FORMAT.contains(this.format)) {
+            throw new ParameterInvalidException("type", format);
+        }
 
     }
 }

@@ -1,6 +1,12 @@
 package com.jalasoft.model.fileConverter.parameter;
 
+import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
+
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Alexander Apaza
@@ -11,6 +17,7 @@ public class ExtractMetadataParameter extends Parameter {
     private String type;
     private String inDir;
     private String outDir;
+    private final static List<String> TYPE_LIST= Arrays.asList("txt","png");
 
     ExtractMetadataParameter(File inputFile, String type, String inDir, String outDir) {
         super(inputFile);
@@ -39,4 +46,27 @@ public class ExtractMetadataParameter extends Parameter {
     public String getOutDir() {
         return outDir;
     }
+
+    @Override
+    public void validate() throws ParameterInvalidException {
+        if(inputFile.isHidden()){
+           throw  new ParameterInvalidException();
+        }
+        if(!inputFile.isFile()){
+            throw  new ParameterInvalidException();
+        }
+        if(inputFile.toPath().toString().contains("..")){
+            throw  new ParameterInvalidException("invalid input file");
+        }
+
+        if (this.type.trim().isEmpty()) {
+            throw new ParameterInvalidException();
+        }
+
+        if (!TYPE_LIST.contains(this.type)) {
+            throw new ParameterInvalidException("type", type);
+        }
+
+    }
+
 }
