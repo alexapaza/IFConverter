@@ -1,5 +1,8 @@
 package com.jalasoft.model.parameter;
 
+import com.jalasoft.model.fileConverter.exception.FileConverterException;
+import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
+
 import java.io.File;
 
 /**
@@ -41,16 +44,16 @@ public class FileConverterParam extends Parameter{
     }
 
     @Override
-    public void validate() throws  Exception{
+    public void validate() throws ParameterInvalidException {
         super.validate();
         if (this.inputPath.trim().isEmpty()){
-            throw new Exception("Error in input path");
+            throw new ParameterInvalidException();
         }
         if (this.outputPath.trim().isEmpty()){
-            throw new Exception("Error in output path");
+            throw new ParameterInvalidException();
         }
         if (this.format.trim().isEmpty()){
-            throw new Exception("Error in format file");
+            throw new ParameterInvalidException();
         }
 
 

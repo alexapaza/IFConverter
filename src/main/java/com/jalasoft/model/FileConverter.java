@@ -5,8 +5,11 @@ import com.aspose.imaging.SmoothingMode;
 import com.aspose.imaging.imageoptions.CmxRasterizationOptions;
 import com.aspose.imaging.imageoptions.PngOptions;
 import com.aspose.imaging.imageoptions.PositioningTypes;
+import com.jalasoft.model.fileConverter.exception.FileConverterException;
+import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
 import com.jalasoft.model.parameter.FileConverterParam;
 import com.jalasoft.model.parameter.Parameter;
+import com.jalasoft.model.result.Result;
 
 /**
  * @author Alexander Apaza
@@ -16,7 +19,8 @@ import com.jalasoft.model.parameter.Parameter;
 
 public class FileConverter {
 
-    public String converFile(FileConverterParam param) throws Exception {
+    //public String converFile(FileConverterParam param) throws Exception {
+    public Result converFile(FileConverterParam param) throws FileConverterException, ParameterInvalidException {
         param.validate();
         String dataDirFile = param.getInputPath()+ param.getFileName(); // param.getInputPath()+param.getFileName(); // "src/main/resources/CMX/Rectangle.cmx";
 
@@ -27,9 +31,9 @@ public class FileConverter {
             PngOptions options = new PngOptions();
             options.setVectorRasterizationOptions(cmxRasterizationOptions);
             image.save(  param.getOutputPath()+ param.getFileName()+"."+ param.getFormat(), options);
-            return "File converted succesfully";
+            return new Result("Conversion went fine");
         }catch (Exception e){
-            throw  new Exception("Failed file converter:"+e.getMessage());
+            throw  new FileConverterException(e);
         }
 
     }

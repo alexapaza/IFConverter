@@ -1,5 +1,7 @@
 package com.jalasoft.model.parameter;
 
+import com.jalasoft.model.fileConverter.exception.ParameterInvalidException;
+
 import java.io.File;
 
 /**
@@ -20,11 +22,11 @@ public class Parameter {
         return inputFile.getName();
     }
 
-    public void validate() throws Exception{
+    public void validate() throws ParameterInvalidException {
         if (inputFile.isHidden()){
-            throw new Exception("Error file is hidden");
+            throw new ParameterInvalidException();
         }if (!inputFile.isFile()){
-            throw new Exception("Error is not file");
+            throw new ParameterInvalidException();
         }
 
     }

@@ -1,12 +1,15 @@
 package com.jalasoft.Controller;
 
 
+import com.jalasoft.Controller.Response.ErrorResponse;
+import com.jalasoft.Controller.Response.OKResponse;
 import com.jalasoft.Controller.Response.Response;
 import com.jalasoft.Controller.component.Properties;
 import com.jalasoft.Controller.service.FileService;
 import com.jalasoft.model.FileConverter;
 import com.jalasoft.model.parameter.FileConverterParam;
 import com.jalasoft.model.parameter.Parameter;
+import com.jalasoft.model.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -44,19 +49,17 @@ public class ControllerFileConverter {
 
         if (file.isEmpty()){
             return ResponseEntity.badRequest().body(
-                    new Response("","File is empty","400")
+                    new ErrorResponse("File is empty","400")
             );
-
-                    //  new ResponseEntity("","file is empty",400);
         }
         if (format.isEmpty()){
             return ResponseEntity.badRequest().body(
-                    new Response("","format is wrong","400")
+                    new ErrorResponse("format is wrong","400")
             );
         }
         if(md5.isEmpty()){
             return ResponseEntity.badRequest().body(
-                    new Response("","md5 is wrong","400")
+                    new ErrorResponse("md5 is wrong","400")
             );
         }
 
@@ -69,14 +72,14 @@ public class ControllerFileConverter {
 
             FileConverter fileConverter = new FileConverter();
             param.validate();
-            String result= fileConverter.converFile(param);
+            Result result= fileConverter.converFile(param);
             return ResponseEntity.ok().body(
-                    new Response(result,"","200")
+                    new OKResponse("file conversion went fine","200")
             );
 
         }catch (Exception e){
             return ResponseEntity.badRequest().body(
-                    new Response("",e.getMessage(),"400")
+                    new ErrorResponse(e.getMessage(),Integer.toString(HttpServletResponse.SC_BAD_REQUEST))
             );
         }
     }
