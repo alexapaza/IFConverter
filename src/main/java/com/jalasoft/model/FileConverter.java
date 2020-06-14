@@ -1,3 +1,11 @@
+/*
+ *  Copyright (c) 2020 Jalasoft.
+ *
+ * This software is the confidential and proprietary information of Jalasoft.
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ *  license agreement you entered into with Jalasoft.
+ */
 package com.jalasoft.model;
 
 import com.aspose.imaging.Image;
@@ -23,7 +31,7 @@ public class FileConverter implements IFileConverter<FileConverterParam> {
     @Override
     public Result converFile(FileConverterParam param) throws FileConverterException, ParameterInvalidException {
         param.validate();
-        String dataDirFile = param.getInputPath()+ param.getFileName(); // param.getInputPath()+param.getFileName(); // "src/main/resources/CMX/Rectangle.cmx";
+        String dataDirFile = param.getInputPath()+ param.getFileName();
 
         try (Image image = Image.load(dataDirFile)){
             CmxRasterizationOptions cmxRasterizationOptions = new CmxRasterizationOptions();
@@ -39,7 +47,5 @@ public class FileConverter implements IFileConverter<FileConverterParam> {
             logger.writeLog("ERROR:File convertion failed below the detail:"+e.getMessage());
             throw  new FileConverterException(e);
         }
-
     }
-
 }

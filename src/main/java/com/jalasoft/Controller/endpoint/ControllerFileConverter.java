@@ -1,3 +1,11 @@
+/*
+ *  Copyright (c) 2020 Jalasoft.
+ *
+ * This software is the confidential and proprietary information of Jalasoft.
+ * ("Confidential Information"). You shall not disclose such Confidential
+ * Information and shall use it only in accordance with the terms of the
+ *  license agreement you entered into with Jalasoft.
+ */
 package com.jalasoft.Controller.endpoint;
 
 
@@ -17,12 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 
@@ -43,12 +46,11 @@ public class ControllerFileConverter {
     @PostMapping("/converter")
 
     public ResponseEntity gatherConverterInput(RequestConverterParameters parameter){
-
-
         try {
             File image = fileService.saveFileInputFolder(parameter.getFile(),parameter.getMd5());
             FileConverterParam param =
-                    new FileConverterParam(image,properties.getInputFolder(),properties.getOutputFolder(),parameter.getFormat());
+                    new FileConverterParam(image,properties.getInputFolder(),properties.getOutputFolder(),
+                            parameter.getFormat());
 
             IFileConverter<FileConverterParam> fileConverter = new FileConverter();
             // param.validate();
@@ -77,7 +79,8 @@ public class ControllerFileConverter {
         try {
             File image = fileService.saveFileInputFolder(parameter.getFile(),parameter.getMd5());
             FileConverterParam param =
-                    new FileConverterParam(image,properties.getInputFolder(),properties.getOutputFolder(),parameter.getFormat());
+                    new FileConverterParam(image,properties.getInputFolder(),properties.getOutputFolder(),
+                            parameter.getFormat());
 
             IFileConverter<FileConverterParam> fileConverter = new FileConverter();
             // param.validate();
