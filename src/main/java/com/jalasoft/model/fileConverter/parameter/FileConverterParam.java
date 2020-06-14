@@ -54,9 +54,16 @@ public class FileConverterParam extends Parameter {
         if (this.outputPath.trim().isEmpty()){
             throw new ParameterInvalidException();
         }
+        if (null == this.format){
+            throw  new ParameterInvalidException();
+        }
         if (this.format.trim().isEmpty()){
             throw new ParameterInvalidException();
         }
+        if (null == inputFile){
+            throw  new ParameterInvalidException();
+        }
+
         if(inputFile.isHidden()){
             throw  new ParameterInvalidException();
         }
