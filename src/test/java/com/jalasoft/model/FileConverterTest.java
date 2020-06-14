@@ -34,6 +34,7 @@ public class FileConverterTest  {
         FileConverter ext = new FileConverter();
         assertEquals("RectangleInput.cmx.png", ext.converFile(param).getResultText() );
     }
+
     @Test(expected = ParameterInvalidException.class)
     public void verifyWrongFormatDestinationTriggerProperException() throws ParameterInvalidException, FileConverterException {
         FileConverterParam param = new FileConverterParam(
@@ -41,6 +42,7 @@ public class FileConverterTest  {
         FileConverter ext = new FileConverter();
          ext.converFile(param).getResultText() ;
     }
+
     @Test (expected = ParameterInvalidException.class)
     public void verifyNullAsFileTriggerProperException() throws ParameterInvalidException, FileConverterException {
         FileConverterParam param = new FileConverterParam(
@@ -48,6 +50,7 @@ public class FileConverterTest  {
         FileConverter ext = new FileConverter();
         ext.converFile(param).getResultText() ;
     }
+
     @Test (expected = ParameterInvalidException.class)
     public void verifyNullAsFormatTriggerProperException() throws ParameterInvalidException, FileConverterException {
         FileConverterParam param = new FileConverterParam(
@@ -55,6 +58,7 @@ public class FileConverterTest  {
         FileConverter ext = new FileConverter();
         ext.converFile(param).getResultText() ;
     }
+
     @Test (expected = FileConverterException.class)
     public void verifyProperExceptionIsTriggeredWhenSourceFileIsNotSupportedFormat() throws ParameterInvalidException, FileConverterException {
         FileConverterParam param = new FileConverterParam(

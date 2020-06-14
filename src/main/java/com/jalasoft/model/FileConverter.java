@@ -28,6 +28,10 @@ import com.jalasoft.model.util.Logger;
 
 public class FileConverter implements IFileConverter<FileConverterParam> {
     Logger logger = Logger.getInstance();
+    /**
+     * based on inputs provided, it converted to image file, supported only "png" file at the present
+     * @return the Result type that could be ok or bad
+     */
     @Override
     public Result converFile(FileConverterParam param) throws FileConverterException, ParameterInvalidException {
         param.validate();

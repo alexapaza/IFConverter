@@ -24,14 +24,24 @@ repositories {
     maven {
         url = 'https://repository.aspose.com/repo/'
     }
+    maven { url 'http://repo1.maven.org/maven2' }
 }
-
+test {
+    useJUnitPlatform()
+}
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation 'junit:junit:4.12'
+    implementation 'junit:junit:4.12'
     compile("org.springframework.boot:spring-boot-starter-web")
     // https://mvnrepository.com/artifact/net.sourceforge.tess4j/tess4j
     compile group: 'net.sourceforge.tess4j', name: 'tess4j', version: '3.4.8'
     compile 'com.aspose:aspose-imaging:20.4:jdk16'
 }
+
 group = 'com.aspose'
 version = '20.4'
+tasks.withType(Test) {
+    useJUnitPlatform()
+    jvmArgs '--enable-preview'
+}

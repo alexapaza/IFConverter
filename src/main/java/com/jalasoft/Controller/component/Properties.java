@@ -23,19 +23,31 @@ import org.springframework.stereotype.Component;
 public class Properties {
     String inputFolder;
     String outputFolder;
-
+    /**
+     * getter for InputFolder
+     * @return the input folder path.
+     */
     public String getInputFolder() {
         return inputFolder;
     }
-
+    /**
+     * getter for output Folder
+     * @return the output folder path.
+     */
     public String getOutputFolder() {
         return outputFolder;
     }
-
+    /**
+     * setter for input Folder
+     * @set the input folder path.
+     */
     public void setInputFolder(String inputFolder) {
         this.inputFolder = inputFolder;
     }
-
+    /**
+     * setter for output Folder
+     * @set the output folder path.
+     */
     public void setOutputFolder(String outputFolder) {
         this.outputFolder = outputFolder;
     }

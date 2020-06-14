@@ -44,6 +44,10 @@ public class ControllerFileConverter {
     private FileService fileService;
 
     @PostMapping("/converter")
+    /**
+     * "converter" endpoint, to gather the inputs for the file conversion
+     * @return the ResponseEntity given the inputs, it could be ok response or bad response
+     */
 
     public ResponseEntity gatherConverterInput(RequestConverterParameters parameter){
         try {
@@ -74,6 +78,10 @@ public class ControllerFileConverter {
         }
 
     }
+    /**
+     * "download" endpoint, to gather the inputs for the file conversion
+     * @return the ResponseEntity given the inputs, it returns the download link of converted file
+     */
     @PostMapping("/converter/download")
     public ResponseEntity extractMetadata(RequestConverterParameters parameter) {
         try {
